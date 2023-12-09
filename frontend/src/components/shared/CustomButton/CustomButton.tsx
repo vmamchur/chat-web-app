@@ -28,6 +28,7 @@ const SecondaryButton = styled(Button)`
 interface Props {
   children: ReactNode;
   variant: ButtonVariant;
+  [x: string]: unknown;
 }
 
 const buttonTypes: Record<Props['variant'], typeof Button> = {
@@ -38,11 +39,12 @@ const buttonTypes: Record<Props['variant'], typeof Button> = {
 const CustomButton: FC<Props> = ({
   children,
   variant,
+  ...rest
 }) => {
   const ButtonComponent = buttonTypes[variant];
 
   return (
-    <ButtonComponent>
+    <ButtonComponent {...rest}>
       {children}
     </ButtonComponent>
   );
