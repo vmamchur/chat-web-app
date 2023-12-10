@@ -12,7 +12,7 @@ export const Input = styled.input<{ error: boolean }>`
   outline: none;
   
   &:focus {
-    border-color: #3db16b;
+    border-color: ${({ error }) => error ? '#ff6b6b' : '#3db16b'};
   }
 `;
 

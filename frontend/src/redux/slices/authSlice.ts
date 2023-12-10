@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { loginUserData, UserData } from '../../types/UserData';
+import { LoginUserData, RegisterUserData } from '../../types/UserData';
 import { User } from '../../types/User';
 import { authService } from '../../services/authService';
 import { saveAuthData, clearAuthData } from '../../helpers/authStorage';
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (userData: UserData) => {
+  async (userData: RegisterUserData) => {
     const { data } = await authService.register(userData);
 
     const { user, accessToken, refreshToken } = data;
@@ -24,7 +24,7 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (userData: loginUserData) => {
+  async (userData: LoginUserData) => {
     const { data } = await authService.login(userData);
 
     const { user, accessToken, refreshToken } = data;

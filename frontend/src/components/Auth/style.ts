@@ -10,6 +10,14 @@ export const AuthForm = styled.form`
   background-color: #464852;
 `;
 
+export const AuthTitle = styled.h2`
+  margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #ced4da;
+`;
+
 export const Dash = styled.hr`
   margin: 20px 0;
   border: 0;

@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 
 import { useAppDispatch } from '../../../redux/hooks';
 import { register } from '../../../redux/slices/authSlice';
-import { AuthForm, AuthPrompt, Dash } from '../style';
+import { AuthForm, AuthPrompt, AuthTitle, Dash } from '../style';
 import { ButtonVariant } from '../../../types/Button';
 import CustomButton from '../../shared/CustomButton/CustomButton';
 import CustomInput from '../../shared/CustomInput/CustomInput';
@@ -62,6 +62,7 @@ const RegistrationForm = () => {
         handleSubmit,
       }) => (
         <AuthForm onSubmit={handleSubmit}>
+          <AuthTitle>Sign up</AuthTitle>
           <CustomInput
             value={values.username}
             onChange={handleChange}

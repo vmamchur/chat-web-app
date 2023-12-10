@@ -1,11 +1,11 @@
 import { httpClient } from '../http/httpClient';
-import { loginUserData, UserData } from '../types/UserData';
+import { LoginUserData, RegisterUserData } from '../types/UserData';
 
-function register(userData: UserData) {
+function register(userData: RegisterUserData) {
   return httpClient.post('/register', userData);
 }
 
-function login(userData: loginUserData) {
+function login(userData: LoginUserData) {
   return httpClient.post('/login', userData);
 }
 
