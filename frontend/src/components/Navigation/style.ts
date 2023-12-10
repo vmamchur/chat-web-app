@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { NavigationItemProps } from './types';
-
 export const Root = styled.div`
   height: 100vh;
   width: 70px;
@@ -27,10 +25,10 @@ export const NavigationList = styled.ul`
   list-style: none;
 `;
 
-export const NavigationItem = styled.li<NavigationItemProps>`
+export const NavigationItem = styled.li<{ flexgrow?: number}>`
   width: 100%;
   display: flex;
-  flex-grow: ${({ flexGrow }) => flexGrow || 0};
+  flex-grow: ${({ flexgrow }) => flexgrow || 0};
   align-items: flex-start;
   justify-content: center;
 `;

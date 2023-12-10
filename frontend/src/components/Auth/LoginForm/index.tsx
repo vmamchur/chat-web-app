@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
+import { useAppDispatch } from '../../../redux/hooks';
+import { login } from '../../../redux/slices/authSlice';
 import { AuthForm, AuthPrompt, Dash } from '../style';
 import { ButtonVariant } from '../../../types/Button';
 import CustomInput from '../../shared/CustomInput/CustomInput';
@@ -17,6 +19,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const initialValues = {
     username: '',
     password: '',
@@ -27,7 +32,11 @@ const LoginForm = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log(values);
+        dispatch(login({
+          username: values.username,
+          password: values.password,
+        }));
+        navigate('/');
       }}
     >
       {({

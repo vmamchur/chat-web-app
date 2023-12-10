@@ -11,7 +11,7 @@ const ChatBody = () => {
   return (
     <Root>
       <ChatMessages>
-        <ChatMessage isMine>
+        <ChatMessage ismine>
           <ChatMessageContent>
             1111
           </ChatMessageContent>

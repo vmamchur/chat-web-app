@@ -12,13 +12,13 @@ export const ChatMessages = styled.div`
   overflow-y: auto;
 `;
 
-export const ChatMessage = styled.div<{ isMine: boolean }>`
+export const ChatMessage = styled.div<{ ismine: boolean }>`
   max-width: 75%;
   width: fit-content;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  margin-left: ${({ isMine }) => isMine ? 'auto' : '0'};
+  margin-left: ${({ ismine }) => ismine ? 'auto' : '0'};
   gap: 4px;
   word-break: break-word;
 `;
