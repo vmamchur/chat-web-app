@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   /**
    * @typedef {object} User
    * @property {string} id
+   * @property {string} username
+   * @property {string} displayName
    * @property {string} email
    * @property {string} createdAt - ISO Date
    * @property {string} updatedAt - ISO Date
@@ -19,6 +21,15 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV1,
         allowNull: false,
         primaryKey: true,
+      },
+      username: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        unique: true,
+      },
+      displayName: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING(50),
@@ -54,12 +65,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  User.associate = function() {
-    // associations can be defined here
-  };
+  User.associate = function () {};
 
-  User.prototype.toJSON = function() {
-    const values = Object.assign({}, this.get());
+  User.prototype.toJSON = function () {
+    const values = { ...this.get() };
 
     delete values.password;
     delete values.encryptionHash;
@@ -68,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     return values;
   };
 
-  User.prototype.isEqualPassword = function(password) {
+  User.prototype.isEqualPassword = function (password) {
     return encrypt(password, this.encryptionHash) === this.encryptedPassword;
   };
 

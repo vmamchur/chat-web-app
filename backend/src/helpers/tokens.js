@@ -14,13 +14,12 @@ const {
  * @property {string} refreshToken
  */
 
-const createAndSaveAuthTokens = async (user, req) => {
+const createAndSaveAuthTokens = async (user) => {
   const payload = {
     id: user.id,
-    accountType: user.accountType,
   };
 
-  const token = jsonWebToken.sign(payload, SECRET_KEY, {
+  const accessToken = jsonWebToken.sign(payload, SECRET_KEY, {
     expiresIn: AUTH_TOKEN_EXPIRATION_TIME,
   });
 
@@ -29,7 +28,7 @@ const createAndSaveAuthTokens = async (user, req) => {
 
   await user.save();
 
-  return { userId: user.id, accessToken: `JWT ${token}`, refreshToken };
+  return { accessToken, refreshToken };
 };
 
 const createAndSaveResetPasswordToken = async (user) => {

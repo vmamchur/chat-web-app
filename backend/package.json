@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon ./app",
     "start": "node ./app",
-    "migration": "npx sequelize migration:generate --name",
-    "migrate": "npx sequelize db:migrate",
+    "migration": "npx sequelize migration:generate --migrations-path ./src/migrations --name",
+    "migrate": "npx sequelize db:migrate --migrations-path ./src/migrations",
     "migrate:undo": "npx sequelize db:migrate:undo",
     "model": "npx sequelize model:create --name",
     "lint": "eslint ./",

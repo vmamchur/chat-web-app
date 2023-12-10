@@ -1,29 +1,28 @@
 const router = require('express').Router();
 const passport = require('passport');
+
 const { User } = require('../models');
-const { createAndSaveAuthTokens } = require('../helpers/tokens');
 
 /**
- * @typedef {object} UserCreationData
- * @property {string} email
- * @property {string} password
- */
-
-/**
- * POST /api/users
- * @summary Register new User
+ * GET /api/users/current
+ * @summary Get currently logged in user
  * @tags Users
- * @param {UserCreationData} request.body.required - User registration data
- * @return {User} 200 - Created User
+ * @security JWT
+ * @return {User} 200 - User
  */
-router.post('/', (req, res, next) => {
-  User.create({
-    email: req.body.email,
-    password: req.body.password,
-  })
-    .then((user) => createAndSaveAuthTokens(user, req))
-    .then((tokenData) => res.json(tokenData))
-    .catch(next);
+router.get('/current', passport.authenticate('jwt'), async (req, res) => {
+  try {
+    const currentUser = await User.findByPk(req.user.id);
+
+    if (!currentUser) {
+      res.status(404).json({ error: 'User not found' });
+      return;
+    }
+
+    res.json(currentUser);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 /**

@@ -7,9 +7,57 @@ const {
 } = require('../helpers/tokens');
 
 /**
+ * @typedef {object} UserCreationData
+ * @property {string} username
+ * @property {string} displayName
+ * @property {string} email
+ * @property {string} password
+ */
+
+/**
+ * POST /api/register
+ * @summary Register new User
+ * @tags Users
+ * @param {UserCreationData} request.body.required - User registration data
+ * @return {User} 200 - Created User
+ */
+router.post('/register', async (req, res) => {
+  const { username, displayName, email, password } = req.body;
+
+  try {
+    const user = await User.create({
+      username,
+      displayName,
+      email,
+      password,
+    });
+
+    const { accessToken, refreshToken } = await createAndSaveAuthTokens(
+      user,
+      req
+    );
+
+    res.json({
+      user,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+/**
  * @typedef {object} AuthData
  * @property {string} email
  * @property {string} password
+ */
+
+/**
+ * @typedef {object} AuthTokensData
+ * @property {User} user
+ * @property {string} accessToken
+ * @property {string} refreshToken
  */
 
 /**
@@ -20,60 +68,70 @@ const {
  * @return {AuthTokensData} 200 - User Tokens
  */
 router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
   let user;
+
   try {
     user = await User.findOne({
       where: {
-        email: req.body.email,
+        username,
       },
     });
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
 
-  if (!user || !user.isEqualPassword(req.body.password)) {
-    res.status(401).json({
-      key: 'error.login-or-password',
-      message: 'No such user or password is invalid',
-    });
-    return;
+    if (!user || !user.isEqualPassword(password)) {
+      res.status(401).json({
+        message: 'No such user or password is invalid',
+      });
+      return;
+    }
+
+    const { accessToken, refreshToken } = await createAndSaveAuthTokens(
+      user,
+      req
+    );
+
+    res.json({ user, accessToken, refreshToken });
+  } catch (error) {
+    console.error(error);
   }
-
-  const tokenData = await createAndSaveAuthTokens(user, req);
-  res.json(tokenData);
 });
 
 /**
  * @typedef {object} AuthTokenRefreshData
- * @property {string} id - User id
  * @property {string} refreshToken
  */
 
 /**
- * POST /api/auth-token-refresh
+ * POST /api/refresh
  * @summary issue new access and refresh tokens
  * @tags Auth
  * @param {AuthTokenRefreshData} request.body.required - User Tokens
  * @return {AuthTokensData} 200 - New tokens
  */
-router.post('/auth-token-refresh', async (req, res) => {
+router.post('/refresh', async (req, res) => {
+  const { refreshToken } = req.body;
   let user;
+
   try {
     user = await User.findOne({
       where: {
-        id: req.body.userId,
-        refreshToken: req.body.refreshToken,
+        refreshToken,
       },
     });
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
+  } catch (error) {
+    console.error(error);
+  }
 
   if (!user) {
-    res.status(401).json({ key: 'error.token-expired' });
+    res.status(401).json({ message: 'Invalid refresh token' });
     return;
   }
 
-  const tokenData = await createAndSaveAuthTokens(user, req);
-  res.json(tokenData);
+  const { accessToken, refreshToken: updatedRefreshToken } =
+    await createAndSaveAuthTokens(user, req);
+
+  res.json({ user, accessToken, refreshToken: updatedRefreshToken });
 });
 
 /**
