@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { Content, Root, Sidebar } from './style';
 import Chat from '../../components/Chat';
 import Navigation from '../../components/Navigation';
+import ProfileEditModal from '../../modals/ProfileEdit';
 
 const MainPage: FC = () => {
   return (
@@ -12,9 +13,9 @@ const MainPage: FC = () => {
         <Sidebar>
 
         </Sidebar>
-
         <Chat />
       </Content>
+      <ProfileEditModal />
     </Root>
   );
 };

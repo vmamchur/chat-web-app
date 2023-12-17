@@ -1,9 +1,12 @@
+import { useMemo } from 'react';
+
 import { FaCommentAlt, FaUsers, FaCogs, FaPowerOff } from 'react-icons/fa';
 import { FaUserPen } from 'react-icons/fa6';
 
 import logo from '../../assets/logo.svg';
 
 import { logout } from '../../redux/slices/authSlice';
+import { openModal } from '../../redux/slices/modalsSlice';
 import { useAppDispatch } from '../../redux/hooks';
 import { NavItem } from './types';
 import {
@@ -22,25 +25,31 @@ const navigationIconProps = {
 const Navigation = () => {
   const dispatch = useAppDispatch();
 
-  const navigationItems: NavItem[] = [
-    { label: 'Chats', icon: <FaCommentAlt {...navigationIconProps} /> },
-    {
-      label: 'Friends',
-      icon: <FaUsers {...navigationIconProps} />,
-      flexGrow: 1,
-    },
-    { label: 'Profile', icon: <FaUserPen {...navigationIconProps} /> },
-    { label: 'Settings', icon: <FaCogs {...navigationIconProps} /> },
-    {
-      label: 'Logout',
-      icon: (
-        <FaPowerOff
-          {...navigationIconProps}
-          onClick={() => dispatch(logout())}
-        />
-      ),
-    },
-  ];
+  const navigationItems: NavItem[] = useMemo(() => (
+    [
+      { label: 'Chats', icon: <FaCommentAlt {...navigationIconProps} /> },
+      {
+        label: 'Friends',
+        icon: <FaUsers {...navigationIconProps} />,
+        flexGrow: 1,
+      },
+      { 
+        label: 'Profile',
+        icon: <FaUserPen {...navigationIconProps} />,
+        onClick: () => dispatch(openModal('profile')), 
+      },
+      { label: 'Settings', icon: <FaCogs {...navigationIconProps} /> },
+      {
+        label: 'Logout',
+        icon: (
+          <FaPowerOff
+            {...navigationIconProps}
+          />
+        ),
+        onClick: () => dispatch(logout())
+      },
+    ]
+  ), [dispatch]);
 
   return (
     <Root>

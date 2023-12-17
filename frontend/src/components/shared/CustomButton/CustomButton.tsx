@@ -6,6 +6,7 @@ import { ButtonVariant } from '../../../types/Button';
 const Button = styled.button`
   height: 40px;
   width: 100%;
+  padding: 0 16px;
   border-radius: 6px;
   border: none;
   color: #ffffff;

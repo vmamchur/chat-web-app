@@ -12,7 +12,7 @@ export const AuthForm = styled.form`
 
 export const AuthTitle = styled.h2`
   margin-bottom: 16px;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
   text-align: center;
   color: #ced4da;
