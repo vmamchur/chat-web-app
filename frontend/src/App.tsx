@@ -38,7 +38,7 @@ function App() {
     const { refreshToken } = getAuthData();
 
     dispatch(checkAuth(refreshToken));
-  }, []);
+  }, [dispatch]);
 
   return (
     <RouterProvider router={router} />

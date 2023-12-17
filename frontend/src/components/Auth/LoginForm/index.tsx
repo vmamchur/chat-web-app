@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { login } from '../../../redux/slices/authSlice';
 import { AuthForm, AuthPrompt, AuthTitle, Dash } from '../style';
 import { ButtonVariant } from '../../../types/Button';
@@ -19,6 +20,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const { currentUser, isChecked } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -27,17 +29,24 @@ const LoginForm = () => {
     password: '',
   };
 
+  useEffect(() => {
+    if (isChecked && currentUser) {
+      navigate('/');
+    }
+  }, [currentUser, isChecked, navigate]);
+
+  const handleSubmit = (values: typeof initialValues) => {
+    dispatch(login({
+      username: values.username,
+      password: values.password,
+    }));
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        dispatch(login({
-          username: values.username,
-          password: values.password,
-        }));
-        navigate('/');
-      }}
+      onSubmit={handleSubmit}
     >
       {({
         values,

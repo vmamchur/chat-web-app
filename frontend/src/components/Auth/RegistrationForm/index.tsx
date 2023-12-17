@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { useAppDispatch } from '../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { register } from '../../../redux/slices/authSlice';
 import { AuthForm, AuthPrompt, AuthTitle, Dash } from '../style';
 import { ButtonVariant } from '../../../types/Button';
@@ -28,6 +29,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegistrationForm = () => {
+  const { currentUser, isChecked } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -39,19 +41,26 @@ const RegistrationForm = () => {
     passwordConfirm: '',
   };
 
+  useEffect(() => {
+    if (isChecked && currentUser) {
+      navigate('/');
+    }
+  }, [currentUser, isChecked, navigate]);
+
+  const handleSubmit = (values: typeof initialValues) => {
+    dispatch(register({
+      username: values.username,
+      displayName: values.displayName,
+      email: values.email,
+      password: values.password,
+    }));
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => {
-        dispatch(register({
-          username: values.username,
-          displayName: values.displayName,
-          email: values.email,
-          password: values.password,
-        }));
-        navigate('/');
-      }}
+      onSubmit={handleSubmit}
     >
       {({
         values,
