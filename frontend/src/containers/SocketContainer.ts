@@ -25,8 +25,6 @@ const SocketContainer: FC<Props> = ({ children }) => {
     };
   }, [socketInstance, dispatch]);
 
-  console.log(socketInstance);
-
   return children;
 };
 
