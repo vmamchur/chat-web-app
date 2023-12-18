@@ -10,7 +10,11 @@ const sockets = require('./sockets');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 configure(app);
 app.use('/api', routes);
