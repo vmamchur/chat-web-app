@@ -27,5 +27,6 @@ module.exports = {
     'node/file-extension-in-import': [2, 'never'],
     'func-names': ['error', 'never'],
     'no-console': 'off',
+    'consistent-return': 'off',
   },
 };
