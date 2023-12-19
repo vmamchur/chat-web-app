@@ -6,7 +6,7 @@ import CustomButton from '../CustomButton/CustomButton';
 const FileInput = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const chooseFileHandler = () => {
+  const handleFileClick = () => {
     if (!inputRef.current) {
       return;
     }
@@ -17,8 +17,8 @@ const FileInput = () => {
   return (
     <div>
       <input ref={inputRef} type="file" style={{ display: 'none' }} />
-      <CustomButton 
-        onClick={chooseFileHandler} 
+      <CustomButton
+        onClick={handleFileClick}
         variant={ButtonVariant.primary} 
         type="button"
       >

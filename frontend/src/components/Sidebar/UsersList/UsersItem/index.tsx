@@ -11,11 +11,12 @@ import Avatar from '../../../shared/Avatar';
 
 interface Props {
   data: User;
+  onClick: (user: User) => void;
 }
 
-const UsersItem: FC<Props> = ({ data }) => {
+const UsersItem: FC<Props> = ({ data, onClick }) => {
   return (
-    <UsersItemStyled>
+    <UsersItemStyled onClick={() => onClick(data)}>
       <Avatar size={40} />
       <UsersItemBody>
         <UsersItemName>{data.displayName}</UsersItemName>

@@ -14,7 +14,7 @@ const availableTabs = Object.values(Tabs);
 const ProfileEditModal: FC = () => {
   const [activeTab, setActiveTab] = useState<Tabs | string>(availableTabs[0]);
 
-  const selectTabHandler = (tab: string) => setActiveTab(tab);
+  const handleTabSelect = (tab: string) => setActiveTab(tab);
 
   const renderContent = useCallback(() => {
     switch (activeTab) {
@@ -35,7 +35,7 @@ const ProfileEditModal: FC = () => {
       headerTitle="Profile Edit" 
       tabs={availableTabs}
       activeTab={activeTab}
-      onSelectTab={selectTabHandler}
+      onSelectTab={handleTabSelect}
     >
       {renderContent()}
     </Modal>

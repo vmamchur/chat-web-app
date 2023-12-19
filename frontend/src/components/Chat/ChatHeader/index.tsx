@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { MdMoreHoriz } from 'react-icons/md';
 import { FaUser } from 'react-icons/fa';
 
@@ -10,8 +12,13 @@ import {
   ChatHeaderUserName,
   Root,
 } from './style';
+import { User } from '../../../types/User';
 
-const ChatHeader = () => {
+interface Props {
+  user: User;
+}
+
+const ChatHeader: FC<Props> = ({ user }) => {
   return (
     <Root>
       <ChatHeaderUser>
@@ -20,10 +27,10 @@ const ChatHeader = () => {
         </ChatHeaderUserAvatar>
         <div>
           <ChatHeaderDisplayName>
-            displayname
+            {user.displayName}
           </ChatHeaderDisplayName>
           <ChatHeaderUserName>
-            (@username)
+            (@{user.username})
           </ChatHeaderUserName>
           <ChatHeaderStatus>
             Online
