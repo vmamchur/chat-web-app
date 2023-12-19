@@ -11,10 +11,3 @@ export const Content = styled.div`
   display: flex;
   gap: 30px;
 `;
-
-export const Sidebar = styled.div`
-  height: 100%;
-  width: 330px;
-  border-radius: 6px;
-  background-color: #464852;
-`;

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const AvatarStyled = styled.div`
-  width: 64px;
-  height: 64px;
+export const AvatarStyled = styled.div<{ size: number }>`
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
   display: flex;
   align-items: center;
   justify-content: center;

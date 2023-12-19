@@ -14,10 +14,12 @@ export const getAllUsers = createAsyncThunk(
 
 interface UsersState {
   users: User[];
+  isLoading: boolean;
 }
 
 const initialState: UsersState = {
   users: [],
+  isLoading: false,
 };
 
 const usersSlice = createSlice({
@@ -25,8 +27,12 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
       state.users = action.payload;
+      state.isLoading = false;
     });
   },
 });

@@ -4,10 +4,14 @@ import { FaUser } from 'react-icons/fa';
 
 import { AvatarStyled } from './style';
 
-const Avatar: FC = () => {
+interface Props {
+  size?: number;
+}
+
+const Avatar: FC<Props> = ({ size = 64 }) => {
   return (
-    <AvatarStyled>
-      <FaUser size={32} color="#ffffff" />
+    <AvatarStyled size={size}>
+      <FaUser size={size / 2} color="#ffffff" />
     </AvatarStyled>
   );
 };
