@@ -1,17 +1,10 @@
-const { Message } = require('../models');
-
-module.exports = (io) => {
+module.exports = (io, socketIds) => {
   io.on('connection', (socket) => {
-    console.log('New client connected');
+    console.log(' New client connected');
 
-    socket.on('send_message', async ({ text, senderId, receiverId }) => {
-      const message = await Message.create({
-        text,
-        senderId,
-        receiverId,
-      });
-
-      io.to(receiverId).emit('receive_message', message);
+    socket.on('join', (userId) => {
+      console.log(socketIds);
+      socketIds[userId] = socket.id;
     });
 
     socket.on('disconnect', () => {

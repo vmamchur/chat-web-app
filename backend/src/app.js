@@ -16,9 +16,17 @@ const io = socketIo(server, {
   },
 });
 
+const socketIds = {};
+
+app.use((req, res, next) => {
+  req.io = io;
+  req.socketIds = socketIds;
+  return next();
+});
+
 configure(app);
 app.use('/api', routes);
-sockets(io);
+sockets(io, socketIds);
 
 sequelize.authenticate().then(() => {
   server.listen(PORT, () => {
