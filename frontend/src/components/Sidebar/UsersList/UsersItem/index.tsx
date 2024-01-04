@@ -12,11 +12,12 @@ import Avatar from '../../../shared/Avatar';
 interface Props {
   data: User;
   onClick: (user: User) => void;
+  isActive: boolean;
 }
 
-const UsersItem: FC<Props> = ({ data, onClick }) => {
+const UsersItem: FC<Props> = ({ data, onClick, isActive }) => {
   return (
-    <UsersItemStyled onClick={() => onClick(data)}>
+    <UsersItemStyled onClick={() => onClick(data)} isActive={isActive}>
       <Avatar size={40} />
       <UsersItemBody>
         <UsersItemName>{data.displayName}</UsersItemName>

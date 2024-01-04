@@ -11,11 +11,15 @@ interface Props {
 const SocketContainer: FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
   const { socketInstance } = useAppSelector((state) => state.socket);
+  const { currentUser } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!socketInstance) {
-      dispatch(setSocket(socket));
+    if (!currentUser) {
+      return;
     }
+
+    dispatch(setSocket(socket));
+    socket.emit('join', currentUser?.id);
 
     return () => {
       if (socketInstance) {
@@ -23,7 +27,7 @@ const SocketContainer: FC<Props> = ({ children }) => {
         dispatch(setSocket(null));
       }
     };
-  }, [socketInstance, dispatch]);
+  }, [socketInstance, dispatch, currentUser]);
 
   return children;
 };

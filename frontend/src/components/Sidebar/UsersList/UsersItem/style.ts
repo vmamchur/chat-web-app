@@ -1,9 +1,24 @@
 import styled from 'styled-components';
 
-export const UsersItemStyled = styled.li`
+export const UsersItemStyled = styled.li<{ isActive: boolean }>`
+  padding: 10px 20px;
   display: flex;
+  position: relative;
   gap: 10px;
   cursor: pointer;
+  
+  ${({ isActive }) => isActive && `
+    &::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 5px;
+      background-color: #3db16b;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+    }`}
 `;
 
 export const UsersItemBody = styled.div`

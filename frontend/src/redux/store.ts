@@ -4,6 +4,7 @@ import socketReducer from './slices/socketSlice';
 import authReducer from './slices/authSlice';
 import modalsReducer from './slices/modalsSlice';
 import usersReducer from './slices/usersSlice';
+import messagesSlice from './slices/messagesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     auth: authReducer,
     modals: modalsReducer,
     users: usersReducer,
+    messages: messagesSlice,
   },
   middleware: (getDefaultMiddleware) => (
     getDefaultMiddleware({ serializableCheck: false })
