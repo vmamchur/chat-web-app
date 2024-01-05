@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { formatDistanceToNow } from 'date-fns';
 
 import { Message } from '../../../../types/Message';
 import { useAppSelector } from '../../../../redux/hooks';
@@ -9,6 +8,7 @@ import {
   ChatMessageStyled, 
   ChatMessageTimestamp,
 } from './style';
+import formatDate from '../../../../helpers/formatDate';
 
 interface Props {
   message: Message;
@@ -18,10 +18,7 @@ const ChatMessage: FC<Props> = ({ message }) => {
   const { currentUser } = useAppSelector((state) => state.auth);
 
   const isMine = currentUser?.id === message.sender.id;
-  const formattedDate = formatDistanceToNow(
-    new Date(message.createdAt),
-    { addSuffix: true }
-  );
+  const formattedCreatedAt = formatDate(message.createdAt);
 
   return (
     <ChatMessageStyled key={message.id} isMine={isMine}>
@@ -30,7 +27,7 @@ const ChatMessage: FC<Props> = ({ message }) => {
       </ChatMessageContent>
       <ChatMessageAction>
         <ChatMessageTimestamp>
-          {formattedDate}
+          {formattedCreatedAt}
         </ChatMessageTimestamp>
       </ChatMessageAction>
     </ChatMessageStyled>

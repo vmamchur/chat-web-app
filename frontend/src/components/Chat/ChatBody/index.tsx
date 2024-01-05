@@ -9,9 +9,10 @@ import {
 import { Message } from '../../../types/Message';
 import scrollChatToBottom from '../../../helpers/scrollChatToBottom';
 import ChatMessage from './ChatMessage';
+import { Loader } from '../../shared/Loader/style';
 
 const ChatBody = () => {
-  const { messages } = useAppSelector((state) => state.messages);
+  const { messages, isLoading } = useAppSelector((state) => state.messages);
   const { selectedUser } = useAppSelector((state) => state.users);
   const { socketInstance } = useAppSelector((state) => state.socket);
   const dispatch = useAppDispatch();
@@ -43,10 +44,14 @@ const ChatBody = () => {
 
   return (
     <ChatBodyStyled>
-      <ChatMessages id="chat">
-        {messages.map(message => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
+      <ChatMessages isLoading={isLoading} id="chat">
+        {isLoading ? (
+          <Loader />
+        ) : (
+          messages.map(message => (
+            <ChatMessage key={message.id} message={message} />
+          ))
+        )}
       </ChatMessages>
     </ChatBodyStyled>
   );

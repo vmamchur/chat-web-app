@@ -31,6 +31,22 @@ const usersSlice = createSlice({
     selectUser(state, action) {
       state.selectedUser = action.payload;
     },
+    setUserStatus(state, action) {
+      const { userId, isOnline } = action.payload;
+      const user = state.users.find((user) => user.id === userId);
+
+      if (user) {
+        user.isOnline = isOnline;
+      }
+    },
+    setLastSeen(state, action) {
+      const { userId, lastSeen } = action.payload;
+      const user = state.users.find((user) => user.id === userId);
+
+      if (user) {
+        user.lastSeen = lastSeen;
+      }
+    },
   },
   extraReducers(builder) {
     builder.addCase(getAllUsers.pending, (state) => {
@@ -43,6 +59,6 @@ const usersSlice = createSlice({
   },
 });
 
-export const { selectUser } = usersSlice.actions;
+export const { selectUser, setUserStatus, setLastSeen } = usersSlice.actions;
 
 export default usersSlice.reducer;

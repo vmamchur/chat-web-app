@@ -3,6 +3,8 @@ export interface User {
   username: string;
   displayName: string;
   email: string;
+  isOnline: boolean;
+  lastSeen: string;
   createdAt: string;
   updatedAt: string;
 }

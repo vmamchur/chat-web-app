@@ -8,6 +8,7 @@ import {
   UsersItemStyled
 } from './style';
 import Avatar from '../../../shared/Avatar';
+import formatDate from '../../../../helpers/formatDate';
 
 interface Props {
   data: User;
@@ -16,12 +17,18 @@ interface Props {
 }
 
 const UsersItem: FC<Props> = ({ data, onClick, isActive }) => {
+  const formattedDate = formatDate(data.lastSeen);
+
   return (
     <UsersItemStyled onClick={() => onClick(data)} isActive={isActive}>
       <Avatar size={40} />
       <UsersItemBody>
         <UsersItemName>{data.displayName}</UsersItemName>
-        <UsersItemLastSeen>Last seen: 12 day(s) ago</UsersItemLastSeen>
+        {data.isOnline ? (
+          <UsersItemLastSeen isOnline>Online</UsersItemLastSeen>
+        ) : (
+          <UsersItemLastSeen>{formattedDate}</UsersItemLastSeen>
+        )}
       </UsersItemBody>
     </UsersItemStyled>
   );

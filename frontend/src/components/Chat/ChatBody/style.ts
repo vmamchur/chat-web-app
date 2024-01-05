@@ -6,8 +6,15 @@ export const ChatBodyStyled = styled.div`
   margin: 20px 0;
 `;
 
-export const ChatMessages = styled.div`
+export const ChatMessages = styled.div<{ isLoading?: boolean }>`
   height: 100%;
   width: 100%;
+  padding-right: 20px;
   overflow-y: auto;
+
+  ${({ isLoading }) => isLoading && `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `}
 `;

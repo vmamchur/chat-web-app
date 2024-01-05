@@ -40,10 +40,15 @@ export const ChatHeaderUserName = styled.div`
   font-size: 12px;
 `;
 
-export const ChatHeaderStatus = styled.div`
+export const ChatHeaderStatus = styled.div<{ isOnline?: boolean }>`
   display: block;
   color: #fff;
   font-size: 12px;
+
+  ${({ isOnline }) => isOnline && `
+    color: #3db16b;
+    font-weight: bold;
+  `}
 `;
 
 export const ChatHeaderActionsButton = styled.button`

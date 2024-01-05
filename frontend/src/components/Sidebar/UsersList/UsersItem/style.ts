@@ -34,7 +34,12 @@ export const UsersItemName = styled.span`
   color: #ffffff;
 `;
 
-export const UsersItemLastSeen = styled.span`
+export const UsersItemLastSeen = styled.span<{ isOnline?: boolean }>`
   font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
+
+  ${({ isOnline }) => isOnline && `
+    color: #3db16b;
+    font-weight: bold;
+  `}
 `;

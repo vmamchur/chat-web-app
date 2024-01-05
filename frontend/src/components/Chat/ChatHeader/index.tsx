@@ -13,12 +13,15 @@ import {
   Root,
 } from './style';
 import { User } from '../../../types/User';
+import formatDate from '../../../helpers/formatDate';
 
 interface Props {
   user: User;
 }
 
 const ChatHeader: FC<Props> = ({ user }) => {
+  const formattedLastSeen = formatDate(user.lastSeen);
+
   return (
     <Root>
       <ChatHeaderUser>
@@ -32,9 +35,15 @@ const ChatHeader: FC<Props> = ({ user }) => {
           <ChatHeaderUserName>
             (@{user.username})
           </ChatHeaderUserName>
-          <ChatHeaderStatus>
-            Online
-          </ChatHeaderStatus>
+          {user.isOnline ? (
+            <ChatHeaderStatus isOnline>
+              Online
+            </ChatHeaderStatus>
+          ) : (
+            <ChatHeaderStatus>
+              {formattedLastSeen}
+            </ChatHeaderStatus>
+          )}
         </div>
       </ChatHeaderUser>
       <ChatHeaderActionsButton>
