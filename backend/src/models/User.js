@@ -10,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
    * @property {string} username
    * @property {string} displayName
    * @property {string} email
+   * @property {string} refreshToken
+   * @property {string} encryptionHash
+   * @property {string} encryptedPassword
+   * @property {string} resetPasswordToken
+   * @property {string} password - Virtual
+   * @property {boolean} isOnline
+   * @property {string} lastSeen - ISO Date
    * @property {string} createdAt - ISO Date
    * @property {string} updatedAt - ISO Date
    */
@@ -61,6 +68,16 @@ module.exports = (sequelize, DataTypes) => {
             encrypt(password, encryptionHash)
           );
         },
+      },
+      isOnline: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      lastSeen: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     },
     {}
