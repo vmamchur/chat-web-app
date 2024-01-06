@@ -1,9 +1,13 @@
 import { httpClient } from '../http/httpClient';
 
-function getAllUsers() {
-  return httpClient.get('/users');
+function getUsers(searchValue: string) {
+  return httpClient.get('/users', {
+    params: {
+      searchValue,
+    },
+  });
 }
 
 export const usersService = {
-  getAllUsers,
+  getUsers,
 };

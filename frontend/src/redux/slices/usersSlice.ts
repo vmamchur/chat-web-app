@@ -3,10 +3,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../types/User';
 import { usersService } from '../../services/usersService';
 
-export const getAllUsers = createAsyncThunk(
-  'users/getAllUsers',
-  async () => {
-    const { data } = await usersService.getAllUsers();
+export const getUsers = createAsyncThunk(
+  'users/getUsers',
+  async (searchValue: string) => {
+    const { data } = await usersService.getUsers(searchValue);
 
     return data;
   }
@@ -49,10 +49,10 @@ const usersSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getAllUsers.pending, (state) => {
+    builder.addCase(getUsers.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getAllUsers.fulfilled, (state, action) => {
+    builder.addCase(getUsers.fulfilled, (state, action) => {
       state.users = action.payload;
       state.isLoading = false;
     });

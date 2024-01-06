@@ -5,6 +5,13 @@ const spin = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
+export const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
 export const Loader = styled.div`
   width: 60px;
   height: 60px;
@@ -13,3 +20,4 @@ export const Loader = styled.div`
   border-radius: 50%;
   animation: ${spin} 2s linear infinite;
 `;
+
