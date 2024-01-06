@@ -2,8 +2,10 @@ const usersService = require('../services/users.service');
 
 const usersController = {
   getAll: async (req, res) => {
+    const { searchValue } = req.query;
+
     try {
-      const users = await usersService.getAll(req.user.id);
+      const users = await usersService.getAll(req.user.id, searchValue);
 
       res.json(users);
     } catch (error) {

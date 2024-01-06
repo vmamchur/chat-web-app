@@ -3,14 +3,22 @@ const { Op } = require('sequelize');
 const { User } = require('../models');
 
 const usersService = {
-  getAll: async (currentUserId) => {
+  getAll: async (currentUserId, searchValue) => {
     try {
-      const users = await User.findAll({
-        where: {
-          id: {
-            [Op.ne]: currentUserId,
-          },
+      const where = {
+        id: {
+          [Op.ne]: currentUserId,
         },
+      };
+
+      if (searchValue) {
+        where.displayName = {
+          [Op.like]: `%${searchValue}%`,
+        };
+      }
+
+      const users = await User.findAll({
+        where,
         attributes: {
           exclude: ['resetPasswordToken'],
         },
