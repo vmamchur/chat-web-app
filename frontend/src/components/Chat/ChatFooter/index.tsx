@@ -31,8 +31,11 @@ const ChatFooter = () => {
   }, [dispatch, messageText, selectedUser]);
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      handleSendMessage();
+    if (event.key === 'Enter') {
+      if (!event.shiftKey) {
+        event.preventDefault();
+        handleSendMessage();
+      }
     }
   }, [handleSendMessage]);
 
@@ -43,7 +46,7 @@ const ChatFooter = () => {
           value={messageText}
           onChange={(event) => setMessageText(event.target.value)}
           onKeyDown={handleKeyDown}
-          rows={2}
+          rows={1}
           spellCheck={false}
         />
         <ChatFooterFormSubmit onClick={handleSendMessage} type="button">

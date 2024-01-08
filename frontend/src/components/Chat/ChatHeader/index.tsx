@@ -1,10 +1,8 @@
 import { FC } from 'react';
 
-import { MdMoreHoriz } from 'react-icons/md';
 import { FaUser } from 'react-icons/fa';
 
 import {
-  ChatHeaderActionsButton,
   ChatHeaderDisplayName,
   ChatHeaderStatus,
   ChatHeaderUser,
@@ -46,9 +44,6 @@ const ChatHeader: FC<Props> = ({ user }) => {
           )}
         </div>
       </ChatHeaderUser>
-      <ChatHeaderActionsButton>
-        <MdMoreHoriz size={32} color="#ffffff" />
-      </ChatHeaderActionsButton>
     </Root>
   );
 };

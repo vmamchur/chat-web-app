@@ -50,16 +50,3 @@ export const ChatHeaderStatus = styled.div<{ isOnline?: boolean }>`
     font-weight: bold;
   `}
 `;
-
-export const ChatHeaderActionsButton = styled.button`
-  height: 28px;
-  width: 40px;
-  display: flex;
-  align-self: flex-start;
-  justify-content: center;
-  align-items: center;
-  border-radius: 6px;
-  background-color: #3db16b;
-  border: none;
-  cursor: pointer;
-`;
